@@ -55,7 +55,9 @@
   /* Small buttons keep dark text: white on coral is hard to read at this size. */
   .pill.coral { background: var(--coral); color: var(--black); padding: 9px 18px; font-size: 14px; }
   .art { display: grid; place-items: center; }
-  .sticker { width: min(320px, 70vw); border-radius: 18.75%;
+  /* height: auto keeps it square wherever CSS sets the width: without it the img's height="320"
+     attribute wins, and at phone width it stretched into a 150×320 pill (Clauder's check, 2026-09-27). */
+  .sticker { width: min(320px, 70vw); height: auto; border-radius: 18.75%;
              box-shadow: 0 0 0 10px var(--white), 0 30px 60px rgba(31, 30, 27, .35); }
 
   section { padding: 88px 0 8px; }
