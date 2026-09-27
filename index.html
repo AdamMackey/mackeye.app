@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MackEye Apps</title>
+<meta name="description" content="Small apps that each fix one thing, properly: Mac apps and tools for Claude by MackEye Apps.">
+<meta name="theme-color" content="#ec775f">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* The MackEye palette: the tartan's coral and pistachio with Meterous's black
+     and white, and Meterous's own dark mode, so the brand matches the apps. The
+     modern layout ("A. Clean", 2026-09-26) replaced the classic plaque-and-Garamond
+     page, which is kept in brand/archive/site-classic/. */
+  :root {
+    --coral: #ec775f; --green: #adc98a; --black: #1f1e1b; --white: #faf9f5;
+    --clay: #d97757;  /* Meterous's icon tile */
+    --paper: #faf9f5; --card: #ffffff; --ink: #1f1e1b; --soft: #6f6b62; --rule: #e6e1d6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --paper: #262624; --card: #2f2e2b; --ink: #f0eee6; --soft: #a6a39a; --rule: #3f3d39; }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.6 "Inter", -apple-system, sans-serif;
+         -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* The header and hero sit on the coral, in white. */
+  /* The 1px coral shadow covers the seam where the header meets the hero: that edge can land
+     mid-pixel, and the page behind would show through as a dark hairline. */
+  .top { position: sticky; top: 0; z-index: 5; background: var(--coral); color: var(--white);
+         box-shadow: 0 1px 0 var(--coral); }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -0.01em; text-decoration: none; }
+  .brand img { width: 30px; height: 30px; }
+  nav { display: flex; gap: 22px; font-size: 15px; font-weight: 500; }
+  nav a { text-decoration: none; opacity: .85; } nav a:hover { opacity: 1; }
+  .hero { background: var(--coral); color: var(--white); }
+  .hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; align-items: center; gap: 40px;
+                padding-top: 56px; padding-bottom: 96px; }
+  h1 { font-size: clamp(40px, 6vw, 68px); line-height: 1.02; letter-spacing: -0.035em; font-weight: 800; margin: 0 0 20px; }
+  .lede { font-size: 20px; line-height: 1.5; font-weight: 500; margin: 0 0 30px; max-width: 30em; }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 999px; font-weight: 600;
+          font-size: 15px; text-decoration: none; transition: transform .15s ease; }
+  .pill:hover { transform: translateY(-1px); }
+  .pill.light { background: var(--white); color: var(--black); }
+  .pill.ghost { border: 1.5px solid rgba(250, 249, 245, .75); }
+  /* Small buttons keep dark text: white on coral is hard to read at this size. */
+  .pill.coral { background: var(--coral); color: var(--black); padding: 9px 18px; font-size: 14px; }
+  .art { display: grid; place-items: center; }
+  .sticker { width: min(320px, 70vw); border-radius: 18.75%;
+             box-shadow: 0 0 0 10px var(--white), 0 30px 60px rgba(31, 30, 27, .35); }
+
+  section { padding: 88px 0 8px; }
+  .head h2 { font-size: 36px; letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 8px; font-weight: 800; }
+  .head p { color: var(--soft); margin: 0 0 32px; font-size: 17px; }
+  .cards { display: grid; gap: 20px; grid-template-columns: repeat(3, 1fr); }
+  .card { background: var(--card); border: 1px solid var(--rule); border-radius: 24px; padding: 28px; display: flex;
+          flex-direction: column; transition: transform .2s ease, box-shadow .2s ease; }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(31, 30, 27, .14); }
+  /* The icons' art sits 7.5px inside their 84px box, so they're nudged out to line up with the text. */
+  .mark { width: 84px; height: 84px; margin: -6px 0 16px -6px; }
+  /* Letter tiles for the tools without an icon, drawn as Meterous's tile at this size. */
+  .letter { width: 69px; height: 69px; margin: 1.5px 0 23.5px 1.5px; border-radius: 15.5px; background: var(--clay);
+            color: var(--white); display: grid; place-items: center; font-weight: 700; font-size: 34px; }
+  .card h3 { font-size: 22px; letter-spacing: -0.02em; margin: 0 0 8px; font-weight: 700; }
+  .card p { margin: 0 0 14px; }
+  .meta { color: var(--soft); font-size: 14px; margin-top: auto !important; }
+  .actions { display: flex; align-items: center; gap: 16px; margin-top: 8px; }
+  .text-link { font-weight: 600; font-size: 14px; text-decoration: none; opacity: .75; } .text-link:hover { opacity: 1; }
+
+  footer { margin-top: 96px; color: var(--soft); font-size: 14px; }
+  .band { height: 10px; background: url("assets/tartan.png") 0 0 / 304px 304px repeat; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 28px; padding-bottom: 48px; }
+  @media (max-width: 900px) { .cards { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 720px) {
+    nav { display: none; }
+    .hero .wrap { grid-template-columns: 1fr; padding-top: 32px; padding-bottom: 64px; }
+    .art { order: -1; justify-items: start; } .sticker { width: 150px; }
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#"><img src="assets/logo.svg" alt="">MackEye Apps</a>
+  <nav><a href="#mac">Apps</a><a href="#claude">For Claude</a><a href="https://github.com/AdamMackey">GitHub</a></nav>
+</div></header>
+
+<div class="hero"><div class="wrap">
+  <div>
+    <h1>Small apps that each fix one thing, properly.</h1>
+    <p class="lede">Free, open source Mac apps, and tools for people who use Claude every day.</p>
+    <div class="cta">
+      <a class="pill light" href="#mac">See the apps ↓</a>
+      <a class="pill ghost" href="https://github.com/AdamMackey">GitHub</a>
+    </div>
+  </div>
+  <div class="art"><img class="sticker" src="assets/logo.svg" width="320" height="320"
+       alt="The MackEye Apps logo: coral tartan crossed by white-striped green bands"></div>
+</div></div>
+
+<main class="wrap">
+  <section id="mac" aria-labelledby="mac-title">
+    <div class="head"><h2 id="mac-title">Mac apps</h2><p>Free, open source and notarized by Apple.</p></div>
+    <div class="cards">
+      <article class="card">
+        <img class="mark" src="assets/icons/desktop-please.png" alt="" width="84" height="84">
+        <h3>Desktop Please</h3>
+        <p>Show Desktop that works from full-screen apps. Press your usual shortcut anywhere and your desktop appears.</p>
+        <p class="meta">macOS 14 or later</p>
+        <div class="actions">
+          <a class="pill coral" href="https://github.com/AdamMackey/desktop-please/releases/latest">Download</a>
+          <a class="text-link" href="https://github.com/AdamMackey/desktop-please">Source →</a>
+        </div>
+      </article>
+      <article class="card">
+        <img class="mark" src="assets/icons/hold-please.png" alt="" width="84" height="84">
+        <h3>Hold Please</h3>
+        <p>⌘Q only quits when you hold it. A quick tap does nothing, so no more quitting by accident.</p>
+        <p class="meta">macOS 14 or later</p>
+        <div class="actions">
+          <a class="pill coral" href="https://github.com/AdamMackey/hold-please/releases/latest">Download</a>
+          <a class="text-link" href="https://github.com/AdamMackey/hold-please">Source →</a>
+        </div>
+      </article>
+      <article class="card">
+        <img class="mark" src="assets/icons/simple-battery.png" alt="" width="84" height="84">
+        <h3>Simple Battery</h3>
+        <p>Your Bluetooth headset's battery in the menu bar, even for headsets macOS shows no level for.</p>
+        <p class="meta">macOS 13 or later</p>
+        <div class="actions">
+          <a class="pill coral" href="https://github.com/AdamMackey/simple-battery/releases/latest">Download</a>
+          <a class="text-link" href="https://github.com/AdamMackey/simple-battery">Source →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="claude" aria-labelledby="claude-title">
+    <div class="head"><h2 id="claude-title">For Claude</h2><p>Browser extensions and tools for people who use Claude every day.</p></div>
+    <div class="cards">
+      <article class="card">
+        <img class="mark" src="assets/icons/meterous.png" alt="" width="84" height="84">
+        <h3>Meterous</h3>
+        <p>Your Claude usage at a glance: session, Fable and weekly limits in your browser's toolbar, with the time each one resets.</p>
+        <p class="meta">Safari, Chrome, Edge and Firefox</p>
+        <div class="actions"><a class="pill coral" href="https://meterous.app">Get Meterous</a></div>
+      </article>
+      <article class="card">
+        <img class="mark" src="assets/icons/pulseous.png" alt="" width="84" height="84">
+        <h3>Pulseous</h3>
+        <p>Claude's status, one click away: a checkmark when all is well, an X when it isn't.</p>
+        <p class="meta">Safari, Chrome, Edge and Firefox</p>
+        <div class="actions"><a class="pill coral" href="https://pulseous.app">Get Pulseous</a></div>
+      </article>
+      <article class="card">
+        <div class="letter" aria-hidden="true">T</div>
+        <h3>Titleous</h3>
+        <p>Keeps your claude.ai tab named after the chat you're actually in. No network calls.</p>
+        <p class="meta">Userscript for Safari, Chrome, Edge and Firefox</p>
+        <div class="actions"><a class="pill coral" href="https://github.com/AdamMackey/titleous">Get Titleous</a></div>
+      </article>
+      <article class="card">
+        <img class="mark" src="assets/icons/terminous.png" alt="" width="84" height="84">
+        <h3>Terminous</h3>
+        <p>Every Terminal tab shows just its Claude Code thread name. One command, applied live, no restart.</p>
+        <p class="meta">For Claude Code in macOS Terminal</p>
+        <div class="actions"><a class="pill coral" href="https://github.com/AdamMackey/terminous">Get Terminous</a></div>
+      </article>
+      <article class="card">
+        <div class="letter" aria-hidden="true">B</div>
+        <h3>Bangarang</h3>
+        <p>A Claude Code status line: everything worth watching in two rows, in a rainbow box.</p>
+        <p class="meta">For Claude Code</p>
+        <div class="actions"><a class="pill coral" href="https://github.com/AdamMackey/bangarang">Get Bangarang</a></div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="band" role="presentation"></div>
+  <div class="wrap">
+    <span>© 2026 MackEye Apps · <a href="https://github.com/AdamMackey">GitHub</a> · <a href="https://buymeacoffee.com/adammackey">Buy me a coffee</a></span>
+    <span>Meterous, Pulseous, Titleous, Terminous and Bangarang are independent projects, not affiliated with Anthropic.</span>
+  </div>
+</footer>
+</body>
+</html>
