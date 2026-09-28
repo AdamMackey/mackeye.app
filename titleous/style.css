@@ -1,0 +1,173 @@
+/* ==== BEGIN SHARED — generated from ~/SiteStyle/base.css by ~/SiteStyle/sync.py. Edit it there, not here. ==== */
+/* Shared stylesheet for meterous.app and pulseous.app.
+   This file is the source of truth. ~/SiteStyle/sync.py copies it, verbatim, into
+   the marked block at the top of each site's style.css; each site's own components
+   follow that block. Edit here, then run sync.py — never edit the copies. */
+:root {
+  color-scheme: light dark;
+  --bg: #faf9f5;
+  --card: #ffffff;
+  --text: #1f1e1b;
+  --muted: #6f6b62;
+  --line: #e3dfd4;
+  --accent: #c96442;
+  --band: #d97757;   /* the apps' clay: their icons' colour, and MackEye's --clay */
+  --on-band: #fff;
+  --tb-bg: #e9e7e1;  /* the toolbar pictures in the state cards: button and glyph */
+  --tb-glyph: #55524b;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #262624; --card: #2f2e2b; --text: #f0eee6; --muted: #a6a39a; --line: #3f3d39; --accent: #d97757;
+          --tb-bg: #171716; --tb-glyph: #d0cec8; }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+/* The hero glow reaches past the screenshot, and on a phone that is past the edge of the
+   screen: the page scrolled sideways, and Chrome on Android zoomed out to fit it. Clip it
+   at the edge. It has to be on both elements: set on body alone, the value is handed up
+   to the viewport and body itself goes back to visible, so nothing is clipped. */
+html, body { overflow-x: hidden; overflow-x: clip; }
+a { color: var(--accent); }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+.narrow { max-width: 720px; }
+
+/* The band, as on mackeye.app (2026-09-28): the nav and the hero sit on a full-width
+   band of the apps' clay, with white text, in light and dark mode alike. It's their own
+   background, stretched to the window's edges by a spread shadow and clipped back to
+   their height, so the markup stays as it is. Support and Privacy get just the nav. */
+.nav, .hero { background: var(--band); box-shadow: 0 0 0 100vmax var(--band); clip-path: inset(0 -100vmax); }
+/* The nav's clay reaches 1px under it, so where it meets the hero mid-pixel the page
+   behind can't show through as a dark hairline. The hero paints over the overlap. */
+.nav { clip-path: inset(0 -100vmax -1px); }
+/* The band paints the hero's padding too, so the space between the band and the first
+   cards has to be a margin: 56px, the gap Pulseous already leaves between its two rows of cards. */
+.hero { margin-bottom: 56px; }
+
+/* Navigation */
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--on-band); text-decoration: none; font-weight: 600; font-size: 17px; }
+/* A white ring, so the clay tile doesn't vanish into the clay band. */
+.brand img { width: 28px; height: 28px; border-radius: 7px; box-shadow: 0 0 0 2px var(--on-band); }
+/* Full white: dimming them dropped them to about 2.7:1 on the clay. The current page is
+   marked by weight instead. */
+.nav .links a { margin-left: 22px; color: var(--on-band); text-decoration: none; font-size: 15px; }
+.nav .links a[aria-current] { font-weight: 600; }
+.nav .links a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* Home: hero */
+.hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; padding: 56px 0 64px; }
+.hero h1 { margin: 0 0 16px; font-size: 56px; line-height: 1.06; letter-spacing: -0.025em; text-wrap: balance; color: var(--on-band); }
+.lead { margin: 0 0 28px; font-size: 20px; color: var(--muted); }
+.cta { display: inline-flex; align-items: center; gap: 9px; padding: 12px 20px; border-radius: 10px; background: var(--accent); color: #fff; text-decoration: none; font-weight: 600; }
+.cta svg { display: block; flex: none; }
+.demo-link { margin: 16px 0 0; }
+.demo-link a { color: var(--text); font-weight: 600; text-decoration: none; }
+.demo-link a:hover { color: var(--accent); }
+.cta:hover { filter: brightness(1.06); }
+.cta.soon { background: var(--card); color: var(--muted); border: 1px solid var(--line); font-weight: 500; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.fineprint { margin: 14px 0 0; font-size: 14px; color: var(--muted); }
+/* On the band. White on clay is 3.1:1, so the lead gets a little more weight. */
+.hero .lead { color: var(--on-band); font-weight: 500; }
+.hero .fineprint { color: var(--on-band); }
+.hero .demo-link a, .hero .demo-link a:hover { color: var(--on-band); }
+.hero .demo-link a:hover { text-decoration: underline; }
+/* Store badges. Apple's badge is Apple's own artwork, shown exactly as supplied: its
+   marketing guidelines ask for the black one whenever other stores' badges sit beside
+   it, first in the row, never modified or animated (so: no hover effect), at least 40px
+   tall, with clear space of a quarter of its height. The browser badges are ours, drawn
+   to match it. Their glyph and type are sized in cqw, relative to the badge, so they
+   shrink in step with Apple's artwork when the grid narrows on a phone; the px values
+   are for browsers without container units. The logo sits at the left inset Apple's
+   logo uses and the text follows it, left-aligned, the way Apple's badge is laid out.
+   Centring the text was tried twice (logo and text centred together, then text centred
+   beside a left logo) and both looked off next to Apple's badge. */
+.badges { display: grid; grid-template-columns: repeat(2, minmax(0, 180px)); gap: 14px; }
+.store-badge { display: block; border-radius: 5% / 19.5%; color: #fff; text-decoration: none; }
+.store-badge img { display: block; width: 100%; height: auto; }
+.store-badge.browser { container-type: inline-size; display: flex; align-items: center; gap: 3.6%; aspect-ratio: 156.1 / 40; padding: 0 5.9%; border: 1px solid #a6a6a6; background: #000; }
+.store-badge.browser svg { display: block; flex: none; width: 24px; height: 24px; width: 13.4cqw; height: 13.4cqw; }
+.store-badge.browser span { display: block; font-size: 19.5px; font-size: 10.8cqw; font-weight: 450; line-height: 1; letter-spacing: -0.015em; white-space: nowrap; }
+.store-badge.browser small { display: block; margin-bottom: 2px; margin-bottom: 0.9cqw; font-size: 10px; font-size: 5.7cqw; font-weight: 400; letter-spacing: 0.01em; }
+/* On the band, a deep shadow gives the popup its depth. (It had a clay glow behind it,
+   which meant nothing once the band was clay too.) */
+.hero-shot { position: relative; margin: 0; justify-self: center; }
+.hero-shot picture { display: block; }
+.hero-shot img { display: block; width: 340px; max-width: 100%; height: auto; border-radius: 14px; box-shadow: 0 30px 60px -20px rgba(31, 30, 27, 0.5); }
+
+/* Home: two cards under the band, each a picture of the toolbar icon and what it's saying.
+   Each site draws its own icon inside; .tb-bg is the toolbar button behind it. */
+.states { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding-bottom: 56px; }
+.state { display: flex; align-items: center; gap: 22px; margin: 0; padding: 20px 24px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); }
+.state svg { flex: none; width: 132px; height: auto; }
+.tb-bg { fill: var(--tb-bg); }
+.state figcaption { font-size: 15px; color: var(--muted); }
+.state figcaption strong { display: block; margin-bottom: 3px; font-size: 17px; color: var(--text); }
+
+/* Home: features and steps */
+.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding-bottom: 20px; }
+.feature { padding: 22px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); }
+.feature svg { display: block; width: 32px; height: 32px; margin-bottom: 14px; color: var(--accent); }
+.feature h3 { margin: 0 0 6px; font-size: 17px; }
+.feature p { margin: 0; font-size: 15px; color: var(--muted); }
+.howto { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; padding-bottom: 80px; }
+.section-title { margin: 0 0 14px; font-size: 26px; letter-spacing: -0.01em; }
+.section-note { margin: 0; color: var(--muted); }
+.coffee { margin-top: 14px; }
+ol.steps { margin: 0; padding-left: 22px; }
+ol.steps li { margin: 10px 0; }
+ol.steps li::marker { color: var(--accent); font-weight: 600; }
+
+/* Home: demo video */
+.demo { padding-bottom: 80px; text-align: center; }
+.demo .section-note { max-width: 560px; margin: 0 auto; }
+.demo-video { display: block; width: 100%; max-width: 960px; height: auto; margin: 24px auto 0; border-radius: 14px; border: 1px solid var(--line); box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.45); background: #000; }
+
+/* Support and privacy pages */
+header.page { text-align: left; margin: 24px 0 36px; }
+header.page img { width: 88px; height: 88px; border-radius: 20px; }
+header.page h1 { margin: 12px 0 4px; font-size: 32px; letter-spacing: -0.01em; }
+.tagline { margin: 0; font-size: 18px; color: var(--muted); }
+h2 { margin: 40px 0 12px; font-size: 20px; }
+h3 { margin: 24px 0 6px; font-size: 16px; }
+.note { padding: 14px 18px; border-radius: 12px; background: var(--card); border: 1px solid var(--line); }
+kbd { padding: 1px 6px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; background: var(--card); font: 13px ui-monospace, Menlo, monospace; }
+
+/* Footer */
+footer { margin-top: 24px; border-top: 1px solid var(--line); padding: 26px 0 44px; font-size: 14px; color: var(--muted); }
+footer .row { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+footer a { color: var(--muted); text-decoration: none; margin-right: 18px; }
+footer a:hover { color: var(--text); }
+footer .legal { margin: 10px 0 0; font-size: 13px; }
+
+@media (max-width: 980px) {
+  .hero { grid-template-columns: 1fr; gap: 36px; padding: 32px 0 56px; }
+}
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; gap: 32px; padding: 24px 0 48px; }
+  .hero h1 { font-size: 36px; }
+  .states, .features, .howto { grid-template-columns: 1fr; }
+}
+
+/* Narrower than 360px the nav doesn't fit on one line, and the overflow clip cut off its last
+   link ("Privacy" at 320px). Let the links drop to a second line instead. */
+@media (max-width: 359px) {
+  .nav { flex-wrap: wrap; row-gap: 6px; }
+  .nav .links a:first-child { margin-left: 0; }
+}
+
+/* Narrower than this, two badges side by side would take Apple's below its 40px minimum. */
+@media (max-width: 374px) {
+  .badges { grid-template-columns: minmax(0, 180px); }
+}
+/* ==== END SHARED ==== */
+
+/* ==== Titleous only ==== */
+
+/* Nothing yet: the support and privacy pages use only the shared styles. */

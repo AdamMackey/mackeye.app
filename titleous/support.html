@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Titleous – support</title>
+  <meta name="description" content="Setup steps and answers for Titleous, the Safari extension that keeps each claude.ai tab named after the chat you're in.">
+  <meta name="theme-color" content="#c96442">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MackEye Apps">
+  <meta property="og:title" content="Titleous – support">
+  <meta property="og:description" content="Setup steps and answers for Titleous, the Safari extension that keeps each claude.ai tab named after the chat you're in.">
+  <meta property="og:url" content="https://mackeye.app/titleous/support.html">
+  <meta property="og:image" content="https://mackeye.app/titleous/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://mackeye.app/titleous/support.html">
+  <link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <a class="brand" href="../"><img src="icon.png" width="28" height="28" alt="">Titleous</a>
+    <div class="links"><a href="../">Home</a><a href="support.html" aria-current="page">Support</a><a href="privacy.html">Privacy</a></div>
+  </nav>
+</div>
+<div class="wrap narrow">
+  <header class="page">
+    <img src="icon.png" width="88" height="88" alt="">
+    <h1>Support</h1>
+    <p class="tagline">Setting up Titleous, and answers to the usual questions.</p>
+  </header>
+
+  <h2>Setting up</h2>
+  <h3>Safari</h3>
+  <ol class="steps">
+    <li>Get Titleous from the Mac App Store. It's free.</li>
+    <li>Open Titleous once from your Applications folder.</li>
+    <li>In Safari, choose <strong>Settings → Extensions</strong> and tick <strong>Titleous</strong>.</li>
+    <li>Allow it on claude.ai when Safari asks.</li>
+    <li>That's it. Switch chats as usual, and within a second the tab takes the name of the chat you're in.</li>
+  </ol>
+  <h3>Chrome, Edge and Firefox</h3>
+  <ol class="steps">
+    <li>Install <a href="https://violentmonkey.github.io/" rel="noopener">Violentmonkey</a> or <a href="https://www.tampermonkey.net/" rel="noopener">Tampermonkey</a>.</li>
+    <li>Open <a href="https://raw.githubusercontent.com/AdamMackey/titleous/main/titleous.user.js" rel="noopener">titleous.user.js</a> and confirm the install. It's the same code as the Safari extension, free on <a href="https://github.com/AdamMackey/titleous" rel="noopener">GitHub</a>.</li>
+    <li>Reload any claude.ai tabs you already have open.</li>
+  </ol>
+
+  <h2>Questions</h2>
+
+  <h3>What does Titleous change?</h3>
+  <p>Only the title of your claude.ai tabs. claude.ai switches chats without loading a new page, so a tab can keep the name of the chat it first opened until you refresh it. Titleous sets the title to the chat you're actually in, however you switched: the sidebar, search, the keyboard, or Back and Forward.</p>
+
+  <h3>Why does a tab say just "Claude"?</h3>
+  <p>That tab isn't on a chat. It's on claude.ai's home page, a project or settings, so there's no chat name to show, and Titleous puts back "Claude" rather than leave the last chat's name up. A new chat takes its name as soon as claude.ai gives it one.</p>
+
+  <h3>Does it work with the sidebar closed?</h3>
+  <p>Yes. With the sidebar closed, it reads the name from the chat's own header instead.</p>
+
+  <h3>What about tabs Safari reopens after a restart?</h3>
+  <p>Safari reopens tabs before its extensions are ready, so Titleous adds itself to each of those tabs the moment you switch to it. No reload needed.</p>
+
+  <h3>It isn't renaming my tabs</h3>
+  <p>Check that Titleous is ticked in Safari → Settings → Extensions, and that it's allowed on claude.ai: click Titleous in that list, then <strong>Edit Websites</strong>, and set claude.ai to Allow. Then switch to a claude.ai tab.</p>
+
+  <h3>Can Titleous read my chats?</h3>
+  <p>It reads chat names only: the ones claude.ai lists in its sidebar, and the name on the chat's header. It never reads your messages, and it has no access to any other website. It makes no network requests and stores nothing, so nothing it sees leaves your computer. The <a href="privacy.html">privacy policy</a> has the detail.</p>
+
+  <h3>Something's wrong. How do I report it?</h3>
+  <p>Email <a href="mailto:support@mackeye.app?subject=Titleous">support@mackeye.app</a> with your macOS and Safari versions and what you saw, or open an issue on <a href="https://github.com/AdamMackey/titleous/issues" rel="noopener">GitHub</a>. Titleous keeps no logs and has nothing in it that identifies you. If you use Safari's Web Inspector, typing <code>document.documentElement.dataset.titleous</code> in a claude.ai tab's console shows what Titleous last found there; paste that line in too.</p>
+
+  <h3>Is Titleous made by Anthropic?</h3>
+  <p>No. Titleous is an independent app and is not affiliated with, endorsed by, or sponsored by Anthropic. Claude is a trademark of Anthropic, PBC.</p>
+</div>
+<div class="wrap">
+  <footer>
+    <div class="row">
+      <span>© 2026 Adam Mackey</span>
+      <span><a href="support.html">Support</a><a href="privacy.html">Privacy</a><a href="mailto:support@mackeye.app?subject=Titleous">support@mackeye.app</a></span>
+    </div>
+    <p class="legal">Titleous is an independent app, not affiliated with, endorsed by, or sponsored by Anthropic. Claude is a trademark of Anthropic, PBC.</p>
+  </footer>
+</div>
+</body>
+</html>
